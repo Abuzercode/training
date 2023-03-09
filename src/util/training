@@ -49,3 +49,18 @@ for p in personel:
         soyad = p.getElementsByTagName('soyad')[0]
         test = soyad.getElementsByTagName('test')[0]
         print(test.firstChild.data)
+        
+/////////////////////////////        
+import xml.etree.ElementTree as ET
+
+# XML dosyasını yükle
+tree = ET.parse('test.xml')
+root = tree.getroot()
+
+# id'si 8 olan Personel elemanını bul
+for personel in root.findall('Personel'):
+    if personel.get('id') == '8':
+        # Soyad elemanını ve içindeki test elemanının değerini yazdır
+        soyad = personel.find('soyad')
+        test = soyad.find('test')
+        print(test.text)       
