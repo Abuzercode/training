@@ -10,3 +10,42 @@ for personel in root.findall('Personel'):
         # Soyadını al ve yazdır
         soyad = personel.find('soyad').text
         print(soyad)
+
+
+///////////
+<?xml version="1.0" encoding="utf-8"?>
+<Personeller>      
+       <Personel id="1">
+                <ad>Ahmet</ad>
+                <soyad><test>4</test></soyad>
+       </Personel>        
+       <Personel id="2">
+                <ad>Cenk</ad>
+                <soyad><test>3</test></soyad>
+        </Personel>      
+       <Personel id="5">
+                <ad>Hülya</ad>
+                <soyad><test>1</test></soyad>
+        </Personel>       
+       <Personel id="8">
+                <ad>Gamze</ad>
+                <soyad>
+                <test>2</test>
+                </soyad>
+        </Personel>
+</Personeller>
+
+
+import xml.dom.minidom
+
+# XML dosyasını yükle
+doc = xml.dom.minidom.parse('test.xml')
+
+# id'si 8 olan Personel elemanını bul
+personel = doc.getElementsByTagName('Personel')
+for p in personel:
+    if p.getAttribute('id') == '8':
+        # Soyad elemanını ve içindeki test elemanının değerini yazdır
+        soyad = p.getElementsByTagName('soyad')[0]
+        test = soyad.getElementsByTagName('test')[0]
+        print(test.firstChild.data)
