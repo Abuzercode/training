@@ -1,0 +1,12 @@
+import xml.etree.ElementTree as ET
+
+# XML dosyasını yükle
+tree = ET.parse('test.xml')
+root = tree.getroot()
+
+# Personeller içinde döngü yaparak id'si 8 olan Personel'i bul
+for personel in root.findall('Personel'):
+    if personel.get('id') == '8':
+        # Soyadını al ve yazdır
+        soyad = personel.find('soyad').text
+        print(soyad)
