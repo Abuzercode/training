@@ -62,5 +62,72 @@ for personel in root.findall('Personel'):
     if personel.get('id') == '8':
         # Soyad elemanını ve içindeki test elemanının değerini yazdır
         soyad = personel.find('soyad')
+        
+        
+        
+        
+
+SikuliX, komut satırından JVM parametrelerini görüntülemek için "-XX:+PrintFlagsFinal" seçeneğini kullanabilirsiniz.
+
+Aşağıdaki komutu kullanarak, JVM parametrelerinin listesini alabilirsiniz:
+
+perl
+Copy code
+java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|ThreadStackSize'
+Bu komut, JVM'in varsayılan bellek ve yığın boyutlarına ilişkin bilgileri görüntüler. Örnek çıktı şuna benzer olabilir:
+
+css
+Copy code
+uintx InitialHeapSize                          := 134217728    {product}
+uintx MaxHeapSize                              := 536870912    {product}
+uintx ThreadStackSize                          := 1024         {pd product}
+Bu çıktıda "InitialHeapSize" (başlangıçta ayrılan bellek boyutu), "MaxHeapSize" (maksimum bellek boyutu) ve "ThreadStackSize" (yığın boyutu) JVM parametrelerini görebilirsiniz.
+
+Özetle, "java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|ThreadStackSize'" komutunu kullanarak SikuliX için kullanılan varsayılan JVM parametrelerini komut satırından görüntüleyebilirsiniz.
+
+
+
+
+networkhesap@gmail.com
+aynı komutu window için yazar mısın
+SikuliX, Windows'ta JVM parametrelerini görüntülemek için de "-XX:+PrintFlagsFinal" seçeneğini kullanabilirsiniz.
+
+Aşağıdaki komutu kullanarak, JVM parametrelerinin listesini alabilirsiniz:
+
+bash
+Copy code
+java -XX:+PrintFlagsFinal -version 2>&1 | findstr /i "HeapSize ThreadStackSize"
+Bu komut, JVM'in varsayılan bellek ve yığın boyutlarına ilişkin bilgileri görüntüler. Örnek çıktı şuna benzer olabilir:
+
+css
+Copy code
+uintx InitialHeapSize                          := 268435456    {product}
+uintx MaxHeapSize                              := 4294967296   {product}
+uintx ThreadStackSize                          := 1024         {pd product}
+Bu çıktıda "InitialHeapSize" (başlangıçta ayrılan bellek boyutu), "MaxHeapSize" (maksimum bellek boyutu) ve "ThreadStackSize" (yığın boyutu) JVM parametrelerini görebilirsiniz.
+
+Özetle, "java -XX:+PrintFlagsFinal -version 2>&1 | findstr /i "HeapSize ThreadStackSize"" komutunu kullanarak SikuliX için kullanılan varsayılan JVM parametrelerini Windows komut istemi üzerinden görüntüleyebilirsiniz.
+
+
+
+
+networkhesap@gmail.com
+java -jar sikulix.jar -r /path/test.sikuli linuxta kullanırken yapabileceğim bütün JVM parametrelerini açıklamasıyla beraber yazar mısın?
+Elbette, aşağıdaki tabloda, SikuliX'in Linux'ta kullanımı sırasında kullanabileceğiniz çeşitli JVM parametreleri ve açıklamaları verilmiştir:
+
+Parametre	Açıklama
+-Xms<size>	Java sanal makinesinin başlangıçta ayrılacak olan heap bellek boyutunu belirler. <size>, bellek boyutunu belirtmek için kullanılan bir sayısal değerdir. Örneğin, "512m" veya "2g".
+-Xmx<size>	Java sanal makinesinin kullanabileceği maksimum heap bellek boyutunu belirler. <size>, bellek boyutunu belirtmek için kullanılan bir sayısal değerdir. Örneğin, "512m" veya "2g".
+-Xss<size>	Thread yığınlarının boyutunu belirler. <size>, yığın boyutunu belirtmek için kullanılan bir sayısal değerdir. Örneğin, "512k" veya "1m".
+-XX:MaxPermSize=<size>	Java 7 ve öncesi sürümlerinde, kalıcı bellek alanını belirler. <size>, bellek boyutunu belirtmek için kullanılan bir sayısal değerdir. Örneğin, "256m". Bu parametre Java 8 ve sonraki sürümlerde kullanılmaz.
+-XX:MaxMetaspaceSize=<size>	Java 8 ve sonraki sürümlerinde, metaspace alanını belirler. <size>, bellek boyutunu belirtmek için kullanılan bir sayısal değerdir. Örneğin, "256m".
+-D<name>=<value>	Sistem özelliklerini belirler. <name>, özelliğin adını ve <value>, özelliğin değerini belirtmek için kullanılan değerdir. Örneğin, "-Djava.awt.headless=true".
+-verbose:class	JVM, sınıf yükleme işlemlerini ayrıntılı olarak kaydeder.
+-XX:+PrintGCDetails	JVM, garbage collector (çöp toplayıcı) ile ilgili ayrıntılı bilgileri kaydeder.
+-XX:+PrintGCDateStamps	JVM, her garbage collection (çöp toplama) işleminin zaman damgasını kaydeder.
+-XX:+PrintHeapAtGC	JVM, garbage collection (çöp toplama) işlemi sırasında bellek kullanımını kaydeder.
+-XX:+HeapDumpOnOutOfMemoryError	JVM, OutOfMemoryError hatası oluştuğunda heap belleğindeki durumu dosyaya yazar.
+-XX:HeapDumpPath=<path>	Heap belleği görüntüsünün kaydedileceği dos
+
         test = soyad.find('test')
         print(test.text)       
