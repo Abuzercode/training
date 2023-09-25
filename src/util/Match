@@ -1,0 +1,66 @@
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            // Ekran görüntüsü alma işlemi
+            Robot robot = new Robot();
+            Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+            BufferedImage screenCapture = robot.createScreenCapture(screenRect);
+
+
+
+            // Hedef resmi yükleme
+            BufferedImage targetImage = ImageIO.read(new File("C:\\Users\\ahmet\\Desktop\\translate\\target_img.png"));
+
+            // Ekran görüntüsü ile hedef resmi karşılaştırma
+            int screenWidth = screenCapture.getWidth() - targetImage.getWidth() + 1;
+            int screenHeight = screenCapture.getHeight() - targetImage.getHeight() + 1;
+
+            for (int y = 0; y < screenHeight; y++) {
+                for (int x = 0; x < screenWidth; x++) {
+                    BufferedImage subImage = screenCapture.getSubimage(x, y, targetImage.getWidth(), targetImage.getHeight());
+                    if (imagesAreEqual(subImage, targetImage)) {
+                        // Eşleşen pattern bulundu, çerçeveli ekran görüntüsü oluşturma
+                        Graphics2D g2d = screenCapture.createGraphics();
+                        g2d.setColor(new Color(255, 0, 0, 128)); // Transparan kırmızı renk
+                        g2d.drawRect(x, y, targetImage.getWidth(), targetImage.getHeight());
+                        g2d.dispose();
+
+                        // Sonucu kaydetme
+                        ImageIO.write(screenCapture, "PNG", new File("C:\\Users\\ahmet\\Desktop\\translate\\result.png"));
+                        System.out.println("Eşleşen pattern bulundu ve sonuç kaydedildi.");
+                        return;
+                    }
+                }
+            }
+
+            System.out.println("Eşleşen pattern bulunamadı.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // İki resmi karşılaştıran yardımcı fonksiyon
+    private static boolean imagesAreEqual(BufferedImage img1, BufferedImage img2) {
+        int width = img1.getWidth();
+        int height = img1.getHeight();
+
+        if (width != img2.getWidth() || height != img2.getHeight()) {
+            return false;
+        }
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (img1.getRGB(x, y) != img2.getRGB(x, y)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+}
