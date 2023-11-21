@@ -1,5 +1,10 @@
 import xml.etree.ElementTree as ET
+ahmet_packages=$(yum list installed 'ahmet_*' | awk '{print $1, $2}')
 
+# Versiyonları version.txt dosyasına yaz
+echo "$ahmet_packages" | awk '{print $1, $2}' > version.txt
+
+echo "Versiyonlar version.txt dosyasına 
 # XML dosyasını yükle
 tree = ET.parse('test.xml')
 root = tree.getroot()
